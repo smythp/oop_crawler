@@ -5,18 +5,28 @@ map = [
     [('lake',[2,3])]
 ]
 
-def find_room(x,y):
+def find_room(loc):
+    if loc[0] < 0 or loc[1] < 0:
+        return False
     try:
-        return map[y][x]
+        return map[loc[1]][loc[0]]
     except IndexError:
         return False
 
 def north_of(loc):
-    loc = loc[1] + 1
-    if find_room(loc) == False:
-        return False
-    else:
-        return loc
+    new_loc = (loc[0],loc[1] - 1)
+    return find_room(new_loc)
+def south_of(loc):
+    new_loc = (loc[0],loc[1] + 1)
+    return find_room(new_loc)
+def east_of(loc):
+    new_loc = (loc[0] + 1,loc[1])
+    return find_room(new_loc)
+def west_of(loc):
+    new_loc = (loc[0] - 1
+               ,loc[1])
+    return find_room(new_loc)
+
 
 def create_rooms(map):
     loc_y = 0
@@ -58,9 +68,9 @@ class Mob(object):
 
 # create_rooms(map)
 
+# patterns
 # for room in Room.lookup:
 #     print(room)
 
 # print(Room.lookup['lake'].loc)
 
-print(north_of 
