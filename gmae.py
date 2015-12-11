@@ -11,6 +11,13 @@ def find_room(x,y):
     except IndexError:
         return False
 
+def north_of(loc):
+    loc = loc[1] + 1
+    if find_room(loc) == False:
+        return False
+    else:
+        return loc
+
 def create_rooms(map):
     loc_y = 0
     loc_x = 0
@@ -49,9 +56,11 @@ class Mob(object):
         
 #create_rooms(map)
 
-create_rooms(map)
+# create_rooms(map)
 
-for room in Room.lookup:
-    print(room)
+# for room in Room.lookup:
+#     print(room)
 
-print(Room.lookup['lake'].loc)
+# print(Room.lookup['lake'].loc)
+
+print(north_of 
