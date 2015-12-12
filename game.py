@@ -1,9 +1,14 @@
 
-
 map = [
     [('house',[6,8]),('bridge',[4,7])],
     [('lake',[2,3])]
 ]
+
+def return_room_mobs(room_name):
+    output = []
+    for item in room_lookup(room_name).mobs:
+        output.append(item.name)
+    return output
 
 def find_room(loc):
     if loc[0] < 0 or loc[1] < 0:
@@ -11,6 +16,12 @@ def find_room(loc):
     try:
         return map[loc[1]][loc[0]]
     except IndexError:
+        return False
+
+def room_lookup(room_name):
+    try:
+        return Room.lookup[room_name]
+    except KeyError:
         return False
 
 def north_of(loc):
@@ -46,16 +57,22 @@ class Room(object):
         self.exits = exits
         self.loc = loc
         Room.lookup[name] = self
-        
+        self.mobs = []
+        self.contents = []
 
-    
+            
 class Mob(object):
-    def __init__(self,health,i,loc):
+    def __init__(self,name,health,i,loc_name):
+        self.name = name
         self.health = health
         self.i = i
         self.status = 'healthy'
+        self.loc = room_lookup(loc_name)
+        room_lookup(loc_name).mobs.append(self)
         self.attack_rating = 0
         
+    def move(self,direction):
+        pass
 
     def take_damage(self,damage):
         self.health = self.health - damage
@@ -64,7 +81,7 @@ class Mob(object):
 
 #    def move(self,direction):
         
-#create_rooms(map)
+create_rooms(map)
 
 # create_rooms(map)
 
@@ -74,3 +91,12 @@ class Mob(object):
 
 # print(Room.lookup['lake'].loc)
 
+print(room_lookup('poo'))
+
+Patrick = Mob('Patrick',50,[],'house')
+Ann = Mob('Ann',50,[],'house')
+
+print(Patrick)
+print(Patrick.loc)
+print(room_lookup('house').mobs)
+print(return_room_mobs('house'))

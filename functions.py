@@ -82,8 +82,6 @@ def parse(words):
                 sentence[2] = word.upper()
     return(sentence)
 
-
-
 def debug_parse(words):
     sentence = ['xxx','xxx','xxx']
     for word in words:
