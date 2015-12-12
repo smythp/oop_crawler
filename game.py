@@ -79,6 +79,39 @@ class Mob(object):
         if self.health <= 0:
             self.status = 'dead'
 
+class Player(Mob):
+    def __init__(self,name,health,i,loc_name):
+        self.name = name
+        self.health = health
+        self.i = i
+        self.status = 'healthy'
+        self.loc = room_lookup(loc_name)
+        room_lookup(loc_name).mobs.append(self)
+        self.attack_rating = 0
+
+    def look(self):
+        mob_names = []
+        for mob in self.loc.mobs:
+            mob_names.append(mob.name)
+        return "you are at the %s. You see %s here." % (self.loc.name,make_tidy_list(mob_names))
+
+def make_tidy_list(list):
+    if len(list) == 0:
+        return False
+    if len(list) == 1:
+        return list[0]
+    out = ''
+    for item in list[:-1]:
+        out = out + "%s, " % item
+    out = out + "and %s" % list[-1]
+    return out
+    
+
+    out = ""
+    for item in list:
+        out = out + "%s, " % item
+
+        
 #    def move(self,direction):
         
 create_rooms(map)
@@ -91,12 +124,13 @@ create_rooms(map)
 
 # print(Room.lookup['lake'].loc)
 
-print(room_lookup('poo'))
-
-Patrick = Mob('Patrick',50,[],'house')
+Patrick = Player('Patrick',50,[],'house')
 Ann = Mob('Ann',50,[],'house')
 
-print(Patrick)
-print(Patrick.loc)
-print(room_lookup('house').mobs)
-print(return_room_mobs('house'))
+# print(Patrick)
+# print(Patrick.loc)
+# print(room_lookup('house').mobs)
+# print(return_room_mobs('house'))
+
+print(make_tidy_list(['hat','coat','chair']))
+

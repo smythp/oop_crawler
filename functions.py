@@ -1,12 +1,13 @@
 import lexicon
 import synonyms
-import cc
+import game
 
 ##import mobs
 
 synonyms = synonyms.synonym_list
 tokens = lexicon.tokens
 
+Player = game.Player('yourself',50,[],'house')
 
 def update_direction(direction,currentloc):
     if direction == 'W':
@@ -33,7 +34,7 @@ def check_commands(s):
                 cc.p.move((s[0]).upper())
                 print('walking ',s[0].lower())         
         elif s[0] == 'LOOK' and 'L':
-            print("You're at the",cc.Room.lookup[cc.p.c][0]," at location ",cc.p.c)
+            print(Player.look())
         elif s[0] == 'QUIT':
             print("Goodbye!")
             exit()
