@@ -1,7 +1,7 @@
 
 map = [
-    [('house',[6,8],'A decript old house. Not particularly welcoming'),('bridge',[4,7],'A rough bridge over clear water.')],
-    [('lake',[2,3],'Deep and cool, this lake teems with fish.')]
+    [('house',[6,8],'A decript old ediface. Not particularly welcoming.'),('bridge',[4,7],'A rough stone construction over clear water.')],
+    [('lake',[2,3],'Deep and cool, the water teems with fish.')]
 ]
 
 def return_room_mobs(room_name):
@@ -119,7 +119,7 @@ class Player(Mob):
         self.attack_rating = 0
 
     def look(self):
-        out = "You are at the %s." % (self.loc.name)
+        out = "You are at the %s. %s" % (self.loc.name,self.loc.desc)
         mob_names = []
         for mob in self.loc.mobs:
             mob_names.append(mob.name)
