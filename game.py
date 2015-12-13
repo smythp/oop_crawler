@@ -1,4 +1,3 @@
-
 map = [
     [('house',[6,8],'A decript old ediface. Not particularly welcoming.'),('bridge',[4,7],'A rough stone construction over clear water.')],
     [('lake',[2,3],'Deep and cool, the water teems with fish.')]
@@ -71,37 +70,48 @@ class Mob(object):
         self.loc = room_lookup(loc_name)
         room_lookup(loc_name).mobs.append(self)
         self.attack_rating = 0
-        
+
     def move(self,direction):
         if direction == 'N':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0],self.loc.loc[1] - 1)
             if find_room(new_loc) == False:
                 return False
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
-                return True
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
+                return self.loc
         if direction == 'S':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0],self.loc.loc[1] + 1)
             if find_room(new_loc) == False:
                 return False
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
-                return True
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
+                return self.loc
         if direction == 'E':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0] + 1,self.loc.loc[1])
             if find_room(new_loc) == False:
                 return False
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
-                return True
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
+                return self.loc
         if direction == 'W':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0] - 1,self.loc.loc[1])
             if find_room(new_loc) == False:
                 return False
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
-                return True
-            
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
+                return self.loc
 
     def take_damage(self,damage):
         self.health = self.health - damage
@@ -118,6 +128,37 @@ class Player(Mob):
         room_lookup(loc_name).mobs.append(self)
         self.attack_rating = 0
 
+    def move(self,direction):        
+        if direction == 'N':
+            new_loc = (self.loc.loc[0],self.loc.loc[1] - 1)
+            if find_room(new_loc) == False:
+                return "You can't go that way."
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return self.loc.desc
+        if direction == 'S':
+            new_loc = (self.loc.loc[0],self.loc.loc[1] + 1)
+            if find_room(new_loc) == False:
+                return "You can't go that way."
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return self.loc.desc
+        if direction == 'E':
+            new_loc = (self.loc.loc[0] + 1,self.loc.loc[1])
+            if find_room(new_loc) == False:
+                return "You can't go that way."
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return self.loc.desc
+        if direction == 'W':
+            new_loc = (self.loc.loc[0] - 1,self.loc.loc[1])
+            if find_room(new_loc) == False:
+                return "You can't go that way."
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return self.loc.desc
+
+        
     def look(self):
         out = "You are at the %s. %s" % (self.loc.name,self.loc.desc)
         mob_names = []
@@ -157,8 +198,10 @@ create_rooms(map)
 
 # print(Room.lookup['lake'].loc)
 
-Patrick = Player('Patrick',50,[],'house')
+Patrick = Mob('Patrick',50,[],'house')
 Ann = Mob('Ann',50,[],'house')
+Ann.move('S')
+
 
 # print(Patrick)
 # print(Patrick.loc)

@@ -9,23 +9,8 @@ tokens = lexicon.tokens
 
 Player = game.Player('yourself',50,[],'house')
 
-def update_direction(direction,currentloc):
-    if direction == 'W':
-        return (currentloc[0] - 1,currentloc[1])
-    if direction == 'N':
-        return (currentloc[0],currentloc[1] + 1)
-    if direction == 'E':
-        return (currentloc[0] + 1,currentloc[1])
-    if direction == 'S':
-        return (currentloc[0],currentloc[1] - 1)
-
-
 def player_move(direction):
-    if Player.move(direction) == True:
-        Player.move(direction)
-    else:
-        print("You can't go that way.")
-
+    print(Player.move(direction))
         
 def check_commands(s):
     try:

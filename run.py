@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import functions
 import lexicon
 import synonyms
