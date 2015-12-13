@@ -74,8 +74,28 @@ class Mob(object):
         
     def move(self,direction):
         if direction == 'N':
+            new_loc = (self.loc.loc[0],self.loc.loc[1] - 1)
+            if find_room(new_loc) == False:
+                return False
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return True
+        if direction == 'S':
             new_loc = (self.loc.loc[0],self.loc.loc[1] + 1)
-            print(new_loc)
+            if find_room(new_loc) == False:
+                return False
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return True
+        if direction == 'E':
+            new_loc = (self.loc.loc[0] + 1,self.loc.loc[1])
+            if find_room(new_loc) == False:
+                return False
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return True
+        if direction == 'W':
+            new_loc = (self.loc.loc[0] - 1,self.loc.loc[1])
             if find_room(new_loc) == False:
                 return False
             else:
@@ -99,14 +119,15 @@ class Player(Mob):
         self.attack_rating = 0
 
     def look(self):
+        out = "You are at the %s." % (self.loc.name)
         mob_names = []
         for mob in self.loc.mobs:
             mob_names.append(mob.name)
         if make_tidy_list(mob_names) == False:
-            return ""
+            return out
         else:
-            return "you are at the %s. You see %s here." % (self.loc.name,make_tidy_list(mob_names))
-
+            out = out + " You see %s here." % (make_tidy_list(mob_names))
+        return out
 def make_tidy_list(list):
     if len(list) == 0:
         return False
@@ -144,5 +165,5 @@ Ann = Mob('Ann',50,[],'house')
 # print(room_lookup('house').mobs)
 # print(return_room_mobs('house'))
 
-Patrick.move('N')
-print(Patrick.loc)
+
+
