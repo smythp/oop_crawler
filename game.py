@@ -130,32 +130,44 @@ class Player(Mob):
 
     def move(self,direction):        
         if direction == 'N':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0],self.loc.loc[1] - 1)
             if find_room(new_loc) == False:
                 return "You can't go that way."
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
                 return self.loc.desc
         if direction == 'S':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0],self.loc.loc[1] + 1)
             if find_room(new_loc) == False:
                 return "You can't go that way."
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)
                 return self.loc.desc
         if direction == 'E':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0] + 1,self.loc.loc[1])
             if find_room(new_loc) == False:
                 return "You can't go that way."
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)                
                 return self.loc.desc
         if direction == 'W':
+            old_loc = self.loc
             new_loc = (self.loc.loc[0] - 1,self.loc.loc[1])
             if find_room(new_loc) == False:
                 return "You can't go that way."
             else:
                 self.loc = room_lookup(find_room(new_loc)[0])
+                old_loc.mobs.remove(self)
+                self.loc.mobs.append(self)                
                 return self.loc.desc
 
         
