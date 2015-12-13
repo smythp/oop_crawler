@@ -20,19 +20,19 @@ def update_direction(direction,currentloc):
         return (currentloc[0],currentloc[1] - 1)
 
 
+def player_move(direction):
+    if Player.move(direction) == True:
+        Player.move(direction)
+    else:
+        print("You can't go that way.")
+
+        
 def check_commands(s):
     try:
-
-## This first command needs to be fixed to be similar to the one after. Add similarize function to the loop?
         if s[0] == 'GO' and s[1] in tokens['DIRECTIONS']:
-            cc.p.move((s[1]).upper())
-            print('walking ',s[1].lower())
-        if s[0] in tokens['DIRECTIONS']:
-            if cc.p.check_move((s[0]).upper()) == False:
-                print("Can't go in that direction!")
-            else:
-                cc.p.move((s[0]).upper())
-                print('walking ',s[0].lower())         
+            player_move(s[1])
+        elif s[0] in tokens['DIRECTIONS']:
+            player_move(s[0])
         elif s[0] == 'LOOK' and 'L':
             print(Player.look())
         elif s[0] == 'QUIT':

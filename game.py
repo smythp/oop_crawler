@@ -1,7 +1,7 @@
 
 map = [
-    [('house',[6,8]),('bridge',[4,7])],
-    [('lake',[2,3])]
+    [('house',[6,8],'A decript old house. Not particularly welcoming'),('bridge',[4,7],'A rough bridge over clear water.')],
+    [('lake',[2,3],'Deep and cool, this lake teems with fish.')]
 ]
 
 def return_room_mobs(room_name):
@@ -44,7 +44,7 @@ def create_rooms(map):
     loc_x = 0
     for y in map:
         for x in y:
-            Room(x[0],x[1],(loc_x,loc_y))
+            Room(x[0],x[1],(loc_x,loc_y),x[2])
             loc_x += 1
         loc_x = 0
         loc_y += 1
@@ -52,10 +52,11 @@ def create_rooms(map):
         
 class Room(object):
     lookup = {}
-    def __init__(self,name,exits,loc):
+    def __init__(self,name,exits,loc,desc):
         self.name = name
         self.exits = exits
         self.loc = loc
+        self.desc = desc
         Room.lookup[name] = self
         self.mobs = []
         self.contents = []
@@ -72,7 +73,15 @@ class Mob(object):
         self.attack_rating = 0
         
     def move(self,direction):
-        pass
+        if direction == 'N':
+            new_loc = (self.loc.loc[0],self.loc.loc[1] + 1)
+            print(new_loc)
+            if find_room(new_loc) == False:
+                return False
+            else:
+                self.loc = room_lookup(find_room(new_loc)[0])
+                return True
+            
 
     def take_damage(self,damage):
         self.health = self.health - damage
@@ -93,7 +102,10 @@ class Player(Mob):
         mob_names = []
         for mob in self.loc.mobs:
             mob_names.append(mob.name)
-        return "you are at the %s. You see %s here." % (self.loc.name,make_tidy_list(mob_names))
+        if make_tidy_list(mob_names) == False:
+            return ""
+        else:
+            return "you are at the %s. You see %s here." % (self.loc.name,make_tidy_list(mob_names))
 
 def make_tidy_list(list):
     if len(list) == 0:
@@ -132,5 +144,5 @@ Ann = Mob('Ann',50,[],'house')
 # print(room_lookup('house').mobs)
 # print(return_room_mobs('house'))
 
-print(make_tidy_list(['hat','coat','chair']))
-
+Patrick.move('N')
+print(Patrick.loc)
