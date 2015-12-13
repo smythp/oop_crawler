@@ -181,11 +181,14 @@ class Player(Mob):
         else:
             out = out + " You see %s here." % (make_tidy_list(mob_names))
         return out
+
 def make_tidy_list(list):
     if len(list) == 0:
         return False
     if len(list) == 1:
         return list[0]
+    if len(list) == 2:
+        return list[0] + ' and ' + list[1]
     out = ''
     for item in list[:-1]:
         out = out + "%s, " % item
