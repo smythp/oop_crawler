@@ -1,5 +1,7 @@
 ## Lexicon for parser
 
+import game
+
 tokens = {
     'DIRECTIONS':[
         'NORTH',
@@ -29,6 +31,7 @@ tokens = {
     'VERBS':[
         'QUIT',
         'GO',
+        'EXAMINE',
         'L',
         'LOOK',
         'RUN',
@@ -47,3 +50,10 @@ tokens = {
         'A',
         'AN',],
     }
+
+for noun in game.Mob.lookup:
+    tokens['NOUNS'].append(noun.upper())
+
+
+
+

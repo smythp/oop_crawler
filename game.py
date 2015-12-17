@@ -62,6 +62,7 @@ class Room(object):
 
             
 class Mob(object):
+    lookup = {}
     def __init__(self,name,health,i,loc_name):
         self.name = name
         self.health = health
@@ -70,6 +71,7 @@ class Mob(object):
         self.loc = room_lookup(loc_name)
         room_lookup(loc_name).mobs.append(self)
         self.attack_rating = 0
+        Mob.lookup[name] = self
 
     def move(self,direction):
         if direction == 'N':
@@ -127,6 +129,7 @@ class Player(Mob):
         self.loc = room_lookup(loc_name)
         room_lookup(loc_name).mobs.append(self)
         self.attack_rating = 0
+        Mob.lookup[name] = self
 
     def move(self,direction):        
         if direction == 'N':
@@ -203,6 +206,7 @@ def make_tidy_list(list):
         
 #    def move(self,direction):
         
+
 create_rooms(map)
 
 # create_rooms(map)

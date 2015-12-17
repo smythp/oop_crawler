@@ -3,6 +3,7 @@ import functions
 import lexicon
 import synonyms
 import config
+import game
 
 if config.DEBUG == True:
     while 1:
